@@ -1,5 +1,6 @@
 import Head from "next/head";
 import { FC } from "react";
+import { Navbar } from "../ui/Navbar";
 
 interface Props {
     children: React.ReactNode
@@ -13,6 +14,8 @@ export const MainLayout: FC<Props> = ({ children }) => {
         <meta name="description" content={`Transform pdf to png`} />
         <meta name="keywords" content={"Pdf to Png, pdf, png"} />
       </Head>
+
+      <Navbar />
 
       <main
         style={{
