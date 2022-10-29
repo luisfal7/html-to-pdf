@@ -13,10 +13,6 @@ export const Navbar = () => {
   const [theme, setTheme] = useState("light");
   const [language, setLanguage] = useState("");
 
-  const handleChange = (event: SelectChangeEvent) => {
-    setLanguage(event.target.value as string);
-  };
-
   return (
     <AppBar position="static">
       <Container maxWidth="md">
