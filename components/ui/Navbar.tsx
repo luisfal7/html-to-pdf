@@ -15,7 +15,7 @@ export const Navbar = () => {
 
   return (
     <AppBar position="static">
-      <Container maxWidth="md">
+      <Container maxWidth="sm">
         <Toolbar disableGutters>
           {/* md */}
 
