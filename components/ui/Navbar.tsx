@@ -7,11 +7,20 @@ import Container from "@mui/material/Container";
 import ImageListItem from "@mui/material/ImageListItem";
 import LightModeRoundedIcon from "@mui/icons-material/LightModeRounded";
 import NightlightRoundRoundedIcon from "@mui/icons-material/NightlightRoundRounded";
+import { ThemeProvider } from '@mui/material/styles';
 import vercel from "./../../public/vercel.svg";
 
 export const Navbar = () => {
-  const [theme, setTheme] = useState("light");
+  const [theme, setTheme] = useState("lightTheme");
   const [language, setLanguage] = useState("");
+
+  const handleThemeLight = () => {
+    setTheme("darkTheme");
+  };
+
+  const handleThemeNight = () => {
+    setTheme("lightTheme");
+  };
 
   return (
     <AppBar position="static">
@@ -25,21 +34,20 @@ export const Navbar = () => {
             <Image src={vercel} alt="portada" width={50} height={50} />
           </ImageListItem>
 
-
-          {theme === "light" && (
+          {theme === "lightTheme" && (
             <IconButton
               size="large"
-              onClick={() => setTheme("night")}
+              onClick={handleThemeLight}
               color="inherit"
               sx={{ display: { xs: "none", md: "flex" } }}
             >
               <LightModeRoundedIcon />
             </IconButton>
           )}
-          {theme === "night" && (
+          {theme === "darkTheme" && (
             <IconButton
               size="large"
-              onClick={() => setTheme("light")}
+              onClick={handleThemeNight}
               color="inherit"
               sx={{ display: { xs: "none", md: "flex" } }}
             >

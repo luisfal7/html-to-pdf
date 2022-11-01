@@ -5,7 +5,7 @@ import DropFile from "../components/DropFile/DropFile";
 export default function HomePage() {
   return (
     <MainLayout>
-      <Container maxWidth="sm" sx={{border:'1px solid'}}>
+      <Container maxWidth="sm">
         <Box padding={1}>
           <Typography variant="body1" gutterBottom sx={{ fontSize: 12 }}>
             Este conversor de PDF gratuito le permite guardar un documento como
