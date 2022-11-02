@@ -1,10 +1,69 @@
-import React from "react";
+import { useState } from "react";
+import axios from "axios";
 import ArrowCircleUpOutlinedIcon from "@mui/icons-material/ArrowCircleUpOutlined";
 import HighlightOffOutlinedIcon from "@mui/icons-material/HighlightOffOutlined";
 import ArrowCircleDownIcon from "@mui/icons-material/ArrowCircleDown";
-import { Paper, Box, Typography, Button } from "@mui/material";
+import {
+  Paper,
+  Box,
+  Typography,
+  Button,
+  TextField,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogContentText,
+  DialogTitle,
+} from "@mui/material";
 
 const DropFile = () => {
+  const [open, setOpen] = useState(false);
+  const [link, setLink] = useState("");
+  const [validLink, setValidLink] = useState(true);
+
+  const expresiones = {
+    link: /(https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|www\.[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9]+\.[^\s]{2,}|www\.[a-zA-Z0-9]+\.[^\s]{2,})/,
+  };
+
+  const handleValidationLink = (e: any) => {
+    setLink(e.target.value);
+
+    if (expresiones.link.test(e.target.value)) {
+      setValidLink(true);
+    } else {
+      setValidLink(false);
+    }
+  };
+
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+
+  const handleDisabled = (validLink: any) => {
+    if (validLink) {
+      return false;
+    } else {
+      return true;
+    }
+  };
+
+  const handleSubmit = async(e: any) => {
+    e.preventDefault();
+    console.log(link);
+
+    await fetch("api/app", {
+      method: "POST",
+      body: link,
+      headers: {
+        "Content-Type": `text/plain`,
+      },
+    });
+  };
+
   return (
     <Box m={3}>
       <Paper
@@ -27,7 +86,12 @@ const DropFile = () => {
             width: "100%",
           }}
         >
-          <Button variant="contained" color="primary" sx={{ padding:'0px 38px 0px 38px', marginRight:'10px' }}>
+          <Button
+            onClick={handleClickOpen}
+            variant="contained"
+            color="primary"
+            sx={{ padding: "0px 38px 0px 38px", marginRight: "10px" }}
+          >
             <Box
               sx={{
                 display: "flex",
@@ -48,6 +112,42 @@ const DropFile = () => {
               </Typography>
             </Box>
           </Button>
+
+          <Dialog open={open} onClose={handleClose}>
+            <DialogTitle>Agrega Enlace</DialogTitle>
+            <DialogContent>
+              <DialogContentText>
+                Para transformar la pagina web a .pdf pega el enlace en el campo
+                siguiente y presiona aceptar.
+              </DialogContentText>
+              <Box component="form" onSubmit={handleSubmit}>
+                <TextField
+                  autoFocus
+                  margin="dense"
+                  id="enlace"
+                  label="Enlace"
+                  fullWidth
+                  variant="standard"
+                  value={link}
+                  error={!validLink}
+                  required
+                  onChange={(e) => handleValidationLink(e)}
+                />
+              </Box>
+            </DialogContent>
+            <DialogActions>
+              <Button onClick={handleClose}>Cancel</Button>
+              <Box component="form" onSubmit={handleSubmit}>
+                <Button
+                  type="submit"
+                  disabled={handleDisabled(validLink)}
+                  /*  onClick={handleClose} */
+                >
+                  Aceptar
+                </Button>
+              </Box>
+            </DialogActions>
+          </Dialog>
           <Button variant="contained" color="secondary">
             <Box
               sx={{
