@@ -1,9 +1,8 @@
 import { useState } from "react";
-import axios from 'axios'
 import { saveAs } from "file-saver";
+import { useSnackbar } from "notistack";
 import ArrowCircleUpOutlinedIcon from "@mui/icons-material/ArrowCircleUpOutlined";
 import HighlightOffOutlinedIcon from "@mui/icons-material/HighlightOffOutlined";
-import ArrowCircleDownIcon from "@mui/icons-material/ArrowCircleDown";
 import {
   Paper,
   Box,
@@ -14,13 +13,14 @@ import {
   DialogActions,
   DialogContent,
   DialogContentText,
-  DialogTitle,
+  DialogTitle
 } from "@mui/material";
 
 const DropFile = () => {
   const [open, setOpen] = useState(false);
   const [link, setLink] = useState("");
   const [validLink, setValidLink] = useState(true);
+  const { enqueueSnackbar } = useSnackbar()
 
   const expresiones = {
     link: /(https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|www\.[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9]+\.[^\s]{2,}|www\.[a-zA-Z0-9]+\.[^\s]{2,})/,
@@ -57,27 +57,42 @@ const DropFile = () => {
 
     handleClose();
 
-    await fetch("api/download", {
-      method: "POST",
-      body: link,
-      headers: {
-        "Content-Type": `text/plain`,
-      }
-    }).then((res) => {
-      return res
-        .arrayBuffer()
-        .then((res) => {
-          const blob = new Blob([res], { type: "application/pdf" });
-          saveAs(blob, "page-lf.pdf");
-        })
-        .catch((e) => alert(e));
-    });
-  };
-
-  const download = () => {
+    try{
+      enqueueSnackbar('Descargando PDF',{
+        variant:'success',
+        autoHideDuration: 4000,
+        anchorOrigin: {
+          vertical: 'bottom',
+          horizontal: 'center'
+        }
+      })
+      await fetch("api/download", {
+        method: "POST",
+        body: link,
+        headers: {
+          "Content-Type": `text/plain`,
+        }
+      }).then((res) => {
+        return res
+          .arrayBuffer()
+          .then((res) => {
+            const blob = new Blob([res], { type: "application/pdf" });
+            saveAs(blob, "page-lf.pdf");
+          })
+          .catch((e) => alert(e));
+      });
+    }catch(error){
+      enqueueSnackbar('Algo salio mal!',{
+        variant:'error',
+        autoHideDuration: 4000,
+        anchorOrigin: {
+          vertical: 'bottom',
+          horizontal: 'center'
+        }
+      })
+      console.log(error)
+    }
     
-
-
   };
 
   const deleteLink = () => {
@@ -163,7 +178,7 @@ const DropFile = () => {
               <Button onClick={handleClose}>Cancel</Button>
               <Box component="form" onSubmit={handleSubmit}>
                 <Button type="submit" disabled={handleDisabled(validLink)}>
-                  Aceptar
+                  Descargar
                 </Button>
               </Box>
             </DialogActions>
@@ -217,27 +232,6 @@ const DropFile = () => {
             width: "100%",
           }}
         >
-          <Button variant="contained" color="secondary" onClick={download}>
-            <Box
-              sx={{
-                display: "flex",
-                flexDirection: "row",
-                alignContent: "center",
-                alignItems: "center",
-                justifyContent: "center",
-              }}
-            >
-              <ArrowCircleDownIcon sx={{ marginRight: "12px" }} />
-              <Typography
-                variant="inherit"
-                sx={{
-                  fontSize: 10,
-                }}
-              >
-                Descargar PDF
-              </Typography>
-            </Box>
-          </Button>
         </Box>
       </Paper>
     </Box>
