@@ -79,7 +79,16 @@ const DropFile = () => {
             const blob = new Blob([res], { type: "application/pdf" });
             saveAs(blob, "page-lf.pdf");
           })
-          .catch((e) => alert(e));
+          .catch(()=>{
+            enqueueSnackbar('Algo salio mal!',{
+              variant:'error',
+              autoHideDuration: 4000,
+              anchorOrigin: {
+                vertical: 'bottom',
+                horizontal: 'center'
+              }
+            })
+          });
       });
     }catch(error){
       enqueueSnackbar('Algo salio mal!',{
