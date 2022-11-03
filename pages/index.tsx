@@ -8,10 +8,7 @@ export default function HomePage() {
       <Container maxWidth="sm">
         <Box padding={1}>
           <Typography variant="body1" gutterBottom sx={{ fontSize: 12 }}>
-            Este conversor de PDF gratuito le permite guardar un documento como
-            un grupo de imágenes PNG separadas, garantizando una mejor calidad y
-            un mejor tamaño de imagen que cualquier otra herramienta para
-            Convertir PDF a imágenes.
+          Convierta instantáneamente archivos HTML a formato PDF con este convertidor en línea gratuito. Nada que instalar, sin registro, sin marca de agua.
           </Typography>
         </Box>
         <Box padding={1} sx={{ display: "flex" }}>
@@ -25,9 +22,8 @@ export default function HomePage() {
             1
           </Typography>
           <Typography variant="body1" gutterBottom sx={{ fontSize: 12 }}>
-            Haga clic en el botón SUBIR y seleccione hasta 20 archivos PDF que
-            desee convertir. Luego espere a que el proceso de conversión
-            finalice.
+            Haga clic en el botón SUBIR ENLACE y copie el enlace que
+            desea convertir y presione descargar.
           </Typography>
         </Box>
         <Box padding={1} sx={{ display: "flex" }}>
@@ -41,9 +37,7 @@ export default function HomePage() {
             2
           </Typography>
           <Typography variant="body1" gutterBottom sx={{ fontSize: 12 }}>
-            Descargue los resultados, ya sea archivo por archivo o haciendo clic
-            en el botón TODOS LOS ARCHIVOS para guardarlos todos al mismo tiempo
-            en un archivo ZIP comprimido.
+            Espere a que finalice el proceso de conversión, se descargará un archivo pdf automaticamente.
           </Typography>
         </Box>
         <DropFile />

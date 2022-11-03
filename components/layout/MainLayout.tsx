@@ -10,9 +10,9 @@ export const MainLayout: FC<Props> = ({ children }) => {
   return (
     <>
       <Head>
-        <title>{"Pdf•To•Png"}</title>
-        <meta name="description" content={`Transform pdf to png`} />
-        <meta name="keywords" content={"Pdf to Png, pdf, png"} />
+        <title>{"html a pdf"}</title>
+        <meta name="description" content={`Transform html to pdf`} />
+        <meta name="keywords" content={"html to Pdf, pdf, html"} />
       </Head>
 
       <Navbar />

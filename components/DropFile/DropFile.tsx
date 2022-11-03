@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { saveAs } from "file-saver";
 import { useSnackbar } from "notistack";
-import ArrowCircleUpOutlinedIcon from "@mui/icons-material/ArrowCircleUpOutlined";
+import ContentCopyOutlinedIcon from '@mui/icons-material/ContentCopyOutlined';
 import HighlightOffOutlinedIcon from "@mui/icons-material/HighlightOffOutlined";
 import {
   Paper,
@@ -114,21 +114,22 @@ const DropFile = () => {
           borderRadius: "10px",
           alignContent: "center",
           alignItems: "center",
-          justifyContent: "center",
+          justifyContent: "center"
         }}
       >
         <Box
           m={2}
+          mb={4}
           sx={{
             display: "flex",
             justifyContent: "center",
-            width: "100%",
+            width: "100%"
           }}
         >
           <Button
             onClick={handleClickOpen}
             variant="contained"
-            color="primary"
+            color="success"
             sx={{ padding: "0px 38px 0px 38px", marginRight: "10px" }}
           >
             <Box
@@ -140,14 +141,14 @@ const DropFile = () => {
                 justifyContent: "center",
               }}
             >
-              <ArrowCircleUpOutlinedIcon sx={{ marginRight: "12px" }} />
+              <ContentCopyOutlinedIcon sx={{ marginRight: "12px" }} />
               <Typography
                 variant="inherit"
                 sx={{
                   fontSize: 10,
                 }}
               >
-                enlace
+                copiar enlace
               </Typography>
             </Box>
           </Button>
@@ -183,7 +184,7 @@ const DropFile = () => {
               </Box>
             </DialogActions>
           </Dialog>
-          <Button variant="contained" color="secondary" onClick={deleteLink}>
+          <Button variant="contained" color="error" onClick={deleteLink}>
             <Box
               sx={{
                 display: "flex",
@@ -223,15 +224,6 @@ const DropFile = () => {
           >
             {link ? link : "seleccione un enlace"}
           </Typography>
-        </Box>
-        <Box
-          m={2}
-          sx={{
-            display: "flex",
-            justifyContent: "center",
-            width: "100%",
-          }}
-        >
         </Box>
       </Paper>
     </Box>

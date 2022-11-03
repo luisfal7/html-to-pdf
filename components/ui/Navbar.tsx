@@ -7,8 +7,7 @@ import Container from "@mui/material/Container";
 import ImageListItem from "@mui/material/ImageListItem";
 import LightModeRoundedIcon from "@mui/icons-material/LightModeRounded";
 import NightlightRoundRoundedIcon from "@mui/icons-material/NightlightRoundRounded";
-import { ThemeProvider } from '@mui/material/styles';
-import vercel from "./../../public/vercel.svg";
+import html2pdf from "./../../public/htmltopdf.png";
 
 export const Navbar = () => {
   const [theme, setTheme] = useState("lightTheme");
@@ -31,7 +30,7 @@ export const Navbar = () => {
           <ImageListItem
             sx={{ flexGrow: 1, display: { xs: "none", md: "flex" }, mr: 1 }}
           >
-            <Image src={vercel} alt="portada" width={50} height={50} />
+            <Image src={html2pdf} alt="portada" width={50} height={50} />
           </ImageListItem>
 
           {theme === "lightTheme" && (
@@ -60,7 +59,7 @@ export const Navbar = () => {
           <ImageListItem
             sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}
           >
-            <Image src={vercel} alt="portada" width={50} height={50} />
+            <Image src={html2pdf} alt="portada" width={50} height={50} />
           </ImageListItem>
           {theme === "light" && (
             <IconButton
