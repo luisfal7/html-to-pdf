@@ -1,4 +1,6 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
+import axios from 'axios'
+import { saveAs } from "file-saver";
 import ArrowCircleUpOutlinedIcon from "@mui/icons-material/ArrowCircleUpOutlined";
 import HighlightOffOutlinedIcon from "@mui/icons-material/HighlightOffOutlined";
 import ArrowCircleDownIcon from "@mui/icons-material/ArrowCircleDown";
@@ -50,43 +52,41 @@ const DropFile = () => {
     }
   };
 
-  const handleSubmit = async(e: any) => {
-    e.preventDefault()
+  const handleSubmit = async (e: any) => {
+    e.preventDefault();
 
-    console.log(link)
+    handleClose();
 
-    handleClose()
-
-    await fetch("api/url", {
+    await fetch("api/download", {
       method: "POST",
       body: link,
       headers: {
         "Content-Type": `text/plain`,
-      },
-    })
-    
+      }
+    }).then((res) => {
+      return res
+        .arrayBuffer()
+        .then((res) => {
+          const blob = new Blob([res], { type: "application/pdf" });
+          saveAs(blob, "page-lf.pdf");
+        })
+        .catch((e) => alert(e));
+    });
   };
 
   const download = () => {
+    
 
-    if(link){
-      const linka = document.createElement("a");
-      linka.download = "page.pdf";
-      linka.href = "/page.pdf";
-      linka.click();
-    }
 
-  }
+  };
 
   const deleteLink = () => {
-
-    if(link){
-      setLink('')
-    }else{
-      link
+    if (link) {
+      setLink("");
+    } else {
+      link;
     }
-
-  }
+  };
 
   return (
     <Box m={3}>
@@ -162,10 +162,7 @@ const DropFile = () => {
             <DialogActions>
               <Button onClick={handleClose}>Cancel</Button>
               <Box component="form" onSubmit={handleSubmit}>
-                <Button
-                  type="submit"
-                  disabled={handleDisabled(validLink)}
-                >
+                <Button type="submit" disabled={handleDisabled(validLink)}>
                   Aceptar
                 </Button>
               </Box>
@@ -209,7 +206,7 @@ const DropFile = () => {
             gutterBottom
             sx={{ fontSize: 12 }}
           >
-            {link ? link : 'seleccione un enlace'}
+            {link ? link : "seleccione un enlace"}
           </Typography>
         </Box>
         <Box

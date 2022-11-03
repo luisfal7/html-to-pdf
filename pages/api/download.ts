@@ -1,7 +1,7 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 // Import dependencies
 const puppeteer = require("puppeteer");
-const fs = require("fs");
+//const fs = require("fs");
 
 type ResponseData = {
   message: string;
@@ -17,7 +17,7 @@ export default function handler(
     console.log(urlBody)
 
     if (urlBody) {
-      (async() => {
+      (async()=>{
         // The location / URL
         const url = urlBody;
 
@@ -28,19 +28,20 @@ export default function handler(
 
         // Navigate to the website
         const page = await browser.newPage();
-        await page.goto(url, { waitUntil: 'load' });
+        await page.goto(urlBody, { waitUntil: 'load' });
 
         // Modified colors
         // await page.emulateMedia("screen");
 
-        // const pdfBuffer = await page.pdf();
-        // fs.writeFileSync("page.pdf", pdfBuffer);
+        const pdfBuffer = await page.pdf({format: "A4"}) 
+        
+        //fs.writeFileSync("page.pdf", pdfBuffer);
 
         // Generate the PDF
-        await page.pdf({
-          path: "public/page.pdf",
+        /* const buffer = await page.pdf({
+          path: 'public/page.pdf',
           format: "A4",
-        });
+        }); */
 
         // The width, height, and margin options accept values labeled with units. Unlabeled values are treated as pixels.
 
@@ -68,10 +69,10 @@ export default function handler(
         // A4: 8.27in x 11.7in
         // A5: 5.83in x 8.27in
         // A6: 4.13in x 5.83in
-
         // Close the browser
+        res.send(pdfBuffer)
         await browser.close();
-      })();
+      })()
     }
   } catch (error) {
     res.status(404).json({ message: "ERROR URL .HTML" });
