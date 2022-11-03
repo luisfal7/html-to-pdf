@@ -8,7 +8,7 @@ export default function HomePage() {
       <Container maxWidth="sm">
         <Box padding={1}>
           <Typography variant="body1" gutterBottom sx={{ fontSize: 12 }}>
-          Convierta instantáneamente archivos HTML a formato PDF con este convertidor en línea gratuito. Nada que instalar, sin registro, sin marca de agua.
+          Convierta instantáneamente archivos .HTML a formato .PDF con este convertidor en línea gratuito. Nada que instalar, sin registro, sin marca de agua.
           </Typography>
         </Box>
         <Box padding={1} sx={{ display: "flex" }}>
