@@ -11,14 +11,13 @@ export default function handler(
   req: NextApiRequest,
   res: NextApiResponse<ResponseData>
 ) {
-  
   try {
 
     const urlBody = String(req.body);
     console.log(urlBody)
 
     if (urlBody) {
-      (async () => {
+      (async() => {
         // The location / URL
         const url = urlBody;
 
@@ -29,7 +28,7 @@ export default function handler(
 
         // Navigate to the website
         const page = await browser.newPage();
-        await page.goto(url, { waitUntil: "load" });
+        await page.goto(url, { waitUntil: 'load' });
 
         // Modified colors
         // await page.emulateMedia("screen");
@@ -38,7 +37,10 @@ export default function handler(
         // fs.writeFileSync("page.pdf", pdfBuffer);
 
         // Generate the PDF
-        await page.pdf({ path: "public/page.pdf", format: "A4" });
+        await page.pdf({
+          path: "public/page.pdf",
+          format: "A4",
+        });
 
         // The width, height, and margin options accept values labeled with units. Unlabeled values are treated as pixels.
 
@@ -68,9 +70,10 @@ export default function handler(
         // A6: 4.13in x 5.83in
 
         // Close the browser
-        //await browser.close();
+        await browser.close();
       })();
     }
-  } catch (error) {}
-  res.status(404).json({ message: "ERROR URL .HTML" });
+  } catch (error) {
+    res.status(404).json({ message: "ERROR URL .HTML" });
+  }
 }

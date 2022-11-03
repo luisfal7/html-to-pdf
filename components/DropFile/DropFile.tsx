@@ -1,5 +1,4 @@
-import { useState } from "react";
-import axios from "axios";
+import { useState, useEffect } from "react";
 import ArrowCircleUpOutlinedIcon from "@mui/icons-material/ArrowCircleUpOutlined";
 import HighlightOffOutlinedIcon from "@mui/icons-material/HighlightOffOutlined";
 import ArrowCircleDownIcon from "@mui/icons-material/ArrowCircleDown";
@@ -52,17 +51,42 @@ const DropFile = () => {
   };
 
   const handleSubmit = async(e: any) => {
-    e.preventDefault();
-    console.log(link);
+    e.preventDefault()
 
-    await fetch("api/app", {
+    console.log(link)
+
+    handleClose()
+
+    await fetch("api/url", {
       method: "POST",
       body: link,
       headers: {
         "Content-Type": `text/plain`,
       },
-    });
+    })
+    
   };
+
+  const download = () => {
+
+    if(link){
+      const linka = document.createElement("a");
+      linka.download = "page.pdf";
+      linka.href = "/page.pdf";
+      linka.click();
+    }
+
+  }
+
+  const deleteLink = () => {
+
+    if(link){
+      setLink('')
+    }else{
+      link
+    }
+
+  }
 
   return (
     <Box m={3}>
@@ -108,7 +132,7 @@ const DropFile = () => {
                   fontSize: 10,
                 }}
               >
-                subir
+                enlace
               </Typography>
             </Box>
           </Button>
@@ -141,14 +165,13 @@ const DropFile = () => {
                 <Button
                   type="submit"
                   disabled={handleDisabled(validLink)}
-                  /*  onClick={handleClose} */
                 >
                   Aceptar
                 </Button>
               </Box>
             </DialogActions>
           </Dialog>
-          <Button variant="contained" color="secondary">
+          <Button variant="contained" color="secondary" onClick={deleteLink}>
             <Box
               sx={{
                 display: "flex",
@@ -165,7 +188,7 @@ const DropFile = () => {
                   fontSize: 10,
                 }}
               >
-                borrar cola
+                borrar enlace
               </Typography>
             </Box>
           </Button>
@@ -186,7 +209,7 @@ const DropFile = () => {
             gutterBottom
             sx={{ fontSize: 12 }}
           >
-            Arrastre aquí sus archivos.
+            {link ? link : 'seleccione un enlace'}
           </Typography>
         </Box>
         <Box
@@ -197,7 +220,7 @@ const DropFile = () => {
             width: "100%",
           }}
         >
-          <Button variant="contained" color="secondary">
+          <Button variant="contained" color="secondary" onClick={download}>
             <Box
               sx={{
                 display: "flex",
@@ -214,7 +237,7 @@ const DropFile = () => {
                   fontSize: 10,
                 }}
               >
-                todos los archivos
+                Descargar PDF
               </Typography>
             </Box>
           </Button>
